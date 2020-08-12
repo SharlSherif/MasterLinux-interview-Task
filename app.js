@@ -6,7 +6,8 @@ require('dotenv').config()
 //* establish db connection
 require('./database')
 //? routes
-const ProductRoute = require('./routes/product.route')
+const QuestionsRoute = require('./routes/questions.route')
+const UserRoute = require('./routes/user.route')
 
 // body parser
 app.use(
@@ -30,6 +31,7 @@ app.use((req, res, next) => {
     next()
 })
 
-app.use('/api/product', ProductRoute)
+app.use('/api/questions', QuestionsRoute)
+app.use('/api/user', UserRoute)
 
-app.listen(4000, () => console.log('EAS up on 4000..'))
+app.listen(4000, () => console.log('App up on 4000..'))

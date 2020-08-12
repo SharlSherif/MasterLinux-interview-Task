@@ -5,7 +5,7 @@ const QuestionsSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  Answers: [
+  answers: [
     // isCorrectAnswer refers if the answer object is the correct one since its an MCQ based exam
     {
       text: { type: String, required: true },
