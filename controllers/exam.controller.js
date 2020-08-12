@@ -52,7 +52,7 @@ class ExamController {
   static async getData(req, res) {
     Exam.find()
       .then((doc) => {
-        res.status(201).send(
+        res.status(200).send(
           Response({
             isSuccess: true,
             data: doc,
@@ -74,7 +74,7 @@ class ExamController {
 
     User.find({ enrolledExams: examId })
       .then((doc) => {
-        res.status(201).send(
+        res.status(200).send(
           Response({
             isSuccess: true,
             data: doc,
@@ -92,9 +92,9 @@ class ExamController {
   }
 
   static async getExamById(req, res) {
-    Exam.findById(req.params.id)
+    Exam.findById(req.params.id).populate('questions')
       .then((doc) => {
-        res.status(201).send(
+        res.status(200).send(
           Response({
             isSuccess: true,
             data: doc,

@@ -30,13 +30,14 @@ const UserSchema = mongoose.Schema({
   createdExams: [
     // exams created by the "examiner" user type
     {
-      exam: { type: ObjectID, ref: "exam" },
+      type: ObjectID,
+      ref: "exam",
     },
   ],
   // all the questions created by that user, only filled when the user type is "examiner"
   questions: [
     {
-      type: [ObjectID],
+      type: ObjectID,
       ref: "questions",
     },
   ],

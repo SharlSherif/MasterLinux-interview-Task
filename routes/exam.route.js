@@ -27,15 +27,15 @@ router.get(
   AuthMiddleware,
   // ensure that only the examiner user type can fetch Exam
   (req, res, next) => RoleMiddleware(req, res, next, "examiner"),
-  ExamController.getExamGrade
+  ExamController.getExamById
 );
 
 router.get(
-  "/:id",
+  "/grade/:id",
   AuthMiddleware,
   // ensure that only the examiner user type can fetch Exam
   (req, res, next) => RoleMiddleware(req, res, next, "examiner"),
-  ExamController.getExamById
+  ExamController.getExamGrade
 );
 
 module.exports = router;

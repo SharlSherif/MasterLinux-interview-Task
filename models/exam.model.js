@@ -6,10 +6,12 @@ const ExamSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  questions: {
-    type: [ObjectID],
-    ref: "questions",
-  },
+  questions: [
+    {
+      type: ObjectID,
+      ref: "questions",
+    },
+  ],
   createdAt: {
     type: Date,
   },
