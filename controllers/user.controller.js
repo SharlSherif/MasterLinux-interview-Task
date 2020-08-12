@@ -1,4 +1,4 @@
-const User = require("../models/User.model");
+const User = require("../models/user.model");
 const Response = require("../utils/jsonResponse");
 const { encode } = require("../utils/jwt");
 
@@ -61,6 +61,10 @@ class UserController {
           })
         );
       });
+  }
+
+  static async takeAnExam(req, res) {
+
   }
 }
 

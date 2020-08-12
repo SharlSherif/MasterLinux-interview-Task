@@ -8,6 +8,7 @@ require('./database')
 //? routes
 const QuestionsRoute = require('./routes/questions.route')
 const UserRoute = require('./routes/user.route')
+const ExamRoute = require('./routes/exam.route')
 
 // body parser
 app.use(
@@ -32,6 +33,7 @@ app.use((req, res, next) => {
 })
 
 app.use('/api/questions', QuestionsRoute)
+app.use('/api/exam', ExamRoute)
 app.use('/api/user', UserRoute)
 
 app.listen(4000, () => console.log('App up on 4000..'))

@@ -1,8 +1,7 @@
 const { Router } = require("express");
-const { encode } = require("../utils/jwt");
 const router = Router();
 
-const QuestionsController = require("../controllers/questions.controller");
+const ExamController = require("../controllers/exam.controller");
 const AuthMiddleware = require("../middlewares/auth.middleware");
 const RoleMiddleware = require("../middlewares/role.middleware");
 
@@ -12,15 +11,31 @@ router.post(
   AuthMiddleware,
   // ensure that only the examiner user type can add a new question
   (req, res, next) => RoleMiddleware(req, res, next, "examiner"),
-  QuestionsController.create
+  ExamController.create
 );
 
 router.get(
   "/",
   AuthMiddleware,
-  // ensure that only the examiner user type can fetch questions
+  // ensure that only the examiner user type can fetch Exam
   (req, res, next) => RoleMiddleware(req, res, next, "examiner"),
-  QuestionsController.getData
+  ExamController.getData
+);
+
+router.get(
+  "/:id",
+  AuthMiddleware,
+  // ensure that only the examiner user type can fetch Exam
+  (req, res, next) => RoleMiddleware(req, res, next, "examiner"),
+  ExamController.getExamGrade
+);
+
+router.get(
+  "/:id",
+  AuthMiddleware,
+  // ensure that only the examiner user type can fetch Exam
+  (req, res, next) => RoleMiddleware(req, res, next, "examiner"),
+  ExamController.getExamById
 );
 
 module.exports = router;
