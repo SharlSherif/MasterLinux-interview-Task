@@ -1,4 +1,7 @@
-const responseObject = ({ isSuccess, data = [], message = "" }) =>
-    ({ success: isSuccess, data, message })
+const responseObject = ({ isSuccess, data = [], message = "" }) => ({
+  success: isSuccess,
+  data,
+  message: message.toString(),
+});
 
-module.exports = responseObject
+module.exports = responseObject;

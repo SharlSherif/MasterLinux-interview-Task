@@ -1,4 +1,5 @@
 const User = require("../models/user.model");
+const Exam = require("../models/exam.model");
 const Response = require("../utils/jsonResponse");
 const { encode } = require("../utils/jwt");
 
@@ -63,8 +64,73 @@ class UserController {
       });
   }
 
-  static async takeAnExam(req, res) {
+  static takeAnExam = async (req, res) => {
+    const { examID, answers } = req.body;
 
+    try {
+      let exam = await Exam.findById(examID).populate("questions");
+      // if the exam doesnt exist
+      if (exam == null) {
+        return res.status(400).send(
+          Response({
+            isSuccess: false,
+            message: "Couldnt find the exam",
+          })
+        );
+      }
+
+      let overallScore = 0;
+
+      for (let questionOriginal of exam.questions) {
+        for (let { answerID, questionID } of answers) {
+          if (questionID == questionOriginal._id) {
+            let actualCorrectAnswer = questionOriginal.answers.find(
+              (answer) => answer.isCorrectAnswer == true
+            );
+            if (actualCorrectAnswer._id == answerID) {
+              console.log("the correct answer was chosen!!");
+              overallScore += 2;
+            }
+          }
+        }
+      }
+
+      console.log(`overall score is ${overallScore}`);
+      await this.updateUserScore(req.user._id, exam._id, overallScore);
+
+      return res.status(200).send(
+        Response({
+          isSuccess: true,
+          message: "Exam submission is completed",
+        })
+      );
+    } catch (e) {
+      console.log(e);
+      res.status(400).send(
+        Response({
+          isSuccess: false,
+          message: e,
+        })
+      );
+    }
+  };
+
+  static async updateUserScore(userID, examID, overallScore) {
+    return new Promise((resolve, reject) => {
+      User.findByIdAndUpdate(userID, {
+        $push: {
+          enrolledExams: { exam: examID, grade: overallScore },
+        },
+        new: true,
+      })
+        .then((doc) => {
+          console.log(doc);
+          resolve(doc);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
   }
 }
 

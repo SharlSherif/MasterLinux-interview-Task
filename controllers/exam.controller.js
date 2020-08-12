@@ -72,14 +72,28 @@ class ExamController {
   static async getExamGrade(req, res) {
     const examId = req.params.id;
 
-    User.find({ enrolledExams: examId })
+    User.findOne({ "enrolledExams.exam": examId })
       .then((doc) => {
-        res.status(200).send(
-          Response({
-            isSuccess: true,
-            data: doc,
-          })
-        );
+        if (doc == null) {
+          res.status(404).send(
+            Response({
+              isSuccess: false,
+              message: "No enrollments for this exam",
+            })
+          );
+        } else {
+          let responseObject = {
+            username: doc.username,
+            grades: doc.enrolledExams.map((exam) => exam.grade),
+            enrollments: doc.enrolledExams.length
+          };
+          res.status(200).send(
+            Response({
+              isSuccess: true,
+              data: responseObject,
+            })
+          );
+        }
       })
       .catch((err) => {
         res.status(400).send(
@@ -92,7 +106,8 @@ class ExamController {
   }
 
   static async getExamById(req, res) {
-    Exam.findById(req.params.id).populate('questions')
+    Exam.findById(req.params.id)
+      .populate("questions")
       .then((doc) => {
         res.status(200).send(
           Response({
