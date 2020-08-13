@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import "../listexams.css";
 function ExamsList(props) {
   const [exams, setExams] = useState([]);
 
@@ -25,14 +25,20 @@ function ExamsList(props) {
 
   return (
     <div>
-      <h1>Available Exams!</h1>
-      <ul>
+      <div class="header mb-2">
+        <h1>Available Exams!</h1>
+        <small>Click on any to enroll</small>
+      </div>
+
+      <ul class="exams">
         {exams.map((exam) => (
-          <li>
-            <span>{exam.title}</span>
-            <button onClick={() => props.history.push(`/exam/?${exam._id}`)}>
+          <li class="mb-2">
+            <span onClick={() => props.history.push(`/exam/?${exam._id}`)}>
+              {exam.title}
+            </span>
+            {/* <button class="btn btn-primary ml-3" onClick={() => props.history.push(`/exam/?${exam._id}`)}>
               Enroll
-            </button>
+            </button> */}
           </li>
         ))}
       </ul>

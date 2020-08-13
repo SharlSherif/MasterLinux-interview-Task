@@ -1,0 +1,27 @@
+.answers {
+    margin-left: 5px;
+}
+
+input[type='radio'] {
+    margin-right: 5px;
+}
+
+.question-text {
+    font-family: var(--primary-font);
+    font-size: var(--medium-font-size);
+    color: var(--secondary-color)
+}
+
+.answer-text {
+    font-family: var(--primary-font);
+    font-size: var(--small-font-size);
+    color: var(--secondary-color)
+}
+
+.overall-score {
+    text-align: center;
+    color: var(--primary-color)
+}
+.after-submission{
+    text-align: center;
+}

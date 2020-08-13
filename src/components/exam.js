@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import "../exam.css";
 function Exam(props) {
   const [exam, setExam] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
@@ -86,16 +86,37 @@ function Exam(props) {
     console.table(results);
   };
 
+  if (overallScore)
+    return (
+      <div class="header mb-2">
+        <h1 class="after-submission">
+          Overall score is <span class="overall-score">40</span>
+        </h1>
+
+        <hr />
+        <button
+          class="btn btn-primary"
+          onClick={() => (window.location = "/examlist")}
+        >
+          View Exams
+        </button>
+      </div>
+    );
+
   return (
     <div>
-      <h1>Exam</h1>
-      <h2>{exam.title}</h2>
-      {overallScore ? <p>Overall Score is {overallScore}</p> : ""}
+      <div class="header mb-2">
+        <h1>{exam.title}</h1>
+        <hr />
+      </div>
+
       <ul>
         {exam?.questions?.map((question, i) => (
           <>
-            <li key={i}>{question.text}</li>
-            <ul>
+            <li class="question-text" key={i}>
+              {question.text}
+            </li>
+            <ul class="answers">
               {question.answers.map((answer, i) => (
                 <div>
                   <input
@@ -103,14 +124,20 @@ function Exam(props) {
                     name={question.text}
                     onClick={() => onChoice(question._id, answer._id)}
                   />
-                  <span key={i}>{answer.text}</span>
+                  <span class="answer-text" key={i}>
+                    {answer.text}
+                  </span>
                 </div>
               ))}
             </ul>
           </>
         ))}
       </ul>
-      <button onClick={submitResults} disabled={isSubmitted}>
+      <button
+        class="btn btn-primary"
+        onClick={submitResults}
+        disabled={isSubmitted}
+      >
         Submit
       </button>
     </div>

@@ -3,24 +3,29 @@ import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import Login from "./components/login";
 import ExamsList from "./components/listExams";
 import Exam from "./components/exam";
+import CreateQuestion from "./components/createQuestion";
+import Navbar from "./components/Navbar";
+import "./App.css";
+import ExaminerPage from "./pages/examiner";
+
 require("dotenv").config();
 
-const PublicRoute = ({ component: Component, ...rest }) => {
-  let token = localStorage.getItem("token");
+// const PublicRoute = ({ component: Component, ...rest }) => {
+//   let token = localStorage.getItem("token");
 
-  return (
-    <Route
-      {...rest}
-      render={(props) =>
-        !token ? ( // not undefined
-          <Component {...props} />
-        ) : (
-          <Redirect to="/candidate" />
-        )
-      }
-    />
-  );
-};
+//   return (
+//     <Route
+//       {...rest}
+//       render={(props) =>
+//         !token ? ( // not undefined
+//           <Component {...props} />
+//         ) : (
+//           <Redirect to="/candidate" />
+//         )
+//       }
+//     />
+//   );
+// };
 
 console.log(process.env);
 function App(props) {
@@ -28,7 +33,7 @@ function App(props) {
   let user = sessionStorage.getItem("user");
 
   if (!token && !window.location.pathname.includes("/login")) {
-    window.location = "login";
+    window.location = "/login";
   }
   // if (
   //   !!token &&
@@ -45,15 +50,26 @@ function App(props) {
   // }
 
   return (
-    <BrowserRouter>
-      <Switch>
-        {/* admin dashboard route */}
-        <PublicRoute path="/login" exact component={Login} />
-        <Route path="/dashboard" exact component={() => "Hello Examiner!"} />
-        <Route path="/exam" exact component={Exam} />
-        <Route path="/examlist" exact component={ExamsList} />
-      </Switch>
-    </BrowserRouter>
+    <>
+      <BrowserRouter>
+        <Switch>
+          <div class="container">
+            {!window.location.pathname.includes("login") ? <Navbar /> : ""}
+
+            {/* admin dashboard route */}
+            <Route path="/login" exact component={Login} />
+            <Route path="/examiner/" exact component={ExaminerPage} />
+            <Route
+              path="/examiner/addquestion"
+              exact
+              component={CreateQuestion}
+            />
+            <Route path="/exam" exact component={Exam} />
+            <Route path="/examlist" exact component={ExamsList} />
+          </div>
+        </Switch>
+      </BrowserRouter>
+    </>
   );
 }
 

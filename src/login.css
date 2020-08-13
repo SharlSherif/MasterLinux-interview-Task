@@ -1,0 +1,13 @@
+.wrapper {
+    margin-top: 5%
+}
+
+p {
+    text-align: center;
+    font-size: var(--medium-font-size);
+}
+
+form {
+    width: 20rem;
+    margin: auto;
+}
