@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import "../createquestion.css";
 function CreateQuestion(props) {
   const [text, setText] = useState("");
   const [answers, setAnswers] = useState([]);
@@ -19,6 +19,9 @@ function CreateQuestion(props) {
 
     const responseBody = await response.json();
     console.log(responseBody);
+    if(responseBody.success){
+      window.location="/examlist"
+    }
   };
 
   const answerChange = async (value, n) => {
@@ -42,24 +45,39 @@ function CreateQuestion(props) {
   };
   return (
     <div>
-      <h1>Add a new question!</h1>
-      <form onSubmit={submit}>
-        <input placeholder="title" onChange={(e) => setText(e.target.value)} />
-        <h2>Answers</h2>
+      <form onSubmit={submit} class="col-8">
+        <h1 style={{ textAlign: "center" }}>Add a new question!</h1>
+
+        <input
+          class="form-control"
+          placeholder="title"
+          onChange={(e) => setText(e.target.value)}
+        />
+        <small>Answers</small>
         {[1, 2, 3, 4].map((n) => (
-          <div>
+          <div class="input-group mb-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <input
+                  type="radio"
+                  aria-label={n}
+                  name="isCorrectAnswer"
+                  onClick={() => onChoice(n)}
+                />
+              </div>
+            </div>
             <input
-              type="radio"
-              name="correctAnswer"
-              onClick={() => onChoice(n)}
-            />{" "}
-            <input
-              placeholder={`answer${n}`}
+              type="text"
+              class="form-control"
+              placeholder={`Answer ${n}`}
+              aria-label={n}
               onChange={(e) => answerChange(e.target.value, n)}
             />
           </div>
         ))}
-        <button type="submit">Add</button>
+        <button class="btn btn-primary" type="submit">
+          Add
+        </button>
       </form>
     </div>
   );

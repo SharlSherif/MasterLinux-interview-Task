@@ -7,6 +7,7 @@ import CreateQuestion from "./components/createQuestion";
 import Navbar from "./components/Navbar";
 import "./App.css";
 import ExaminerPage from "./pages/examiner";
+import CreateExam from "./components/createExam";
 
 require("dotenv").config();
 
@@ -55,7 +56,6 @@ function App(props) {
         <Switch>
           <div class="container">
             {!window.location.pathname.includes("login") ? <Navbar /> : ""}
-
             {/* admin dashboard route */}
             <Route path="/login" exact component={Login} />
             <Route path="/examiner/" exact component={ExaminerPage} />
@@ -63,7 +63,8 @@ function App(props) {
               path="/examiner/addquestion"
               exact
               component={CreateQuestion}
-            />
+            />{" "}
+            <Route path="/examiner/addexam" exact component={CreateExam} />
             <Route path="/exam" exact component={Exam} />
             <Route path="/examlist" exact component={ExamsList} />
           </div>

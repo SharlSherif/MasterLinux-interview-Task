@@ -117,18 +117,21 @@ function Exam(props) {
               {question.text}
             </li>
             <ul class="answers">
-              {question.answers.map((answer, i) => (
-                <div>
-                  <input
-                    type="radio"
-                    name={question.text}
-                    onClick={() => onChoice(question._id, answer._id)}
-                  />
-                  <span class="answer-text" key={i}>
-                    {answer.text}
-                  </span>
-                </div>
-              ))}
+              {question.answers.map((answer, i) => {
+                if (answer == null) return;
+                return (
+                  <div>
+                    <input
+                      type="radio"
+                      name={question._id}
+                      onClick={() => onChoice(question._id, answer._id)}
+                    />
+                    <span class="answer-text" key={i}>
+                      {answer.text}
+                    </span>
+                  </div>
+                );
+              })}
             </ul>
           </>
         ))}
