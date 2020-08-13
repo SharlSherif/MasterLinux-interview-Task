@@ -50,7 +50,7 @@ class ExamController {
   }
 
   static async getData(req, res) {
-    Exam.find()
+    Exam.find({}).populate("questions")
       .then((doc) => {
         res.status(200).send(
           Response({

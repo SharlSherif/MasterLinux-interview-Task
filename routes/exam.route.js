@@ -17,16 +17,14 @@ router.post(
 router.get(
   "/",
   AuthMiddleware,
-  // ensure that only the examiner user type can fetch Exam
-  (req, res, next) => RoleMiddleware(req, res, next, "examiner"),
   ExamController.getData
 );
 
 router.get(
   "/:id",
   AuthMiddleware,
-  // ensure that only the examiner user type can fetch Exam
-  (req, res, next) => RoleMiddleware(req, res, next, "examiner"),
+  // // ensure that only the examiner user type can fetch Exam
+  // (req, res, next) => RoleMiddleware(req, res, next, "examiner"),
   ExamController.getExamById
 );
 

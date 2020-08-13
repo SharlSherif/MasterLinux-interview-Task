@@ -8,20 +8,26 @@ class UserController {
     const username = req.body.username;
     const password = req.body.password;
 
-    User.findOne({ username }, (err, userDoc) => {
-      if (err || userDoc == null) {
+    User.findOne({ username }, (err, user) => {
+      if (err || user == null) {
         return res
           .status(404)
           .send(Response({ isSuccess: false, message: "No such user" }));
       }
 
-      userDoc.comparePasswords(password, (message, isCorrect) => {
+      user.comparePasswords(password, (message, isCorrect) => {
         if (isCorrect) {
-          const accessToken = encode(userDoc.toJSON());
+          const accessToken = encode(user.toJSON());
           res
             .set("Authorization", accessToken)
             .status(200)
-            .send(Response({ isSuccess: true, data: userDoc }));
+            .send(
+              Response({
+                isSuccess: true,
+                data: { user, accessToken },
+                accessToken,
+              })
+            );
         } else {
           res
             .status(401)
@@ -49,7 +55,7 @@ class UserController {
           .send(
             Response({
               isSuccess: true,
-              data: doc,
+              data: { user, accessToken },
               message: "User created",
             })
           );
@@ -66,7 +72,7 @@ class UserController {
 
   static takeAnExam = async (req, res) => {
     const { examID, answers } = req.body;
-
+    console.log(req.body);
     try {
       let exam = await Exam.findById(examID).populate("questions");
       // if the exam doesnt exist
@@ -101,6 +107,7 @@ class UserController {
       return res.status(200).send(
         Response({
           isSuccess: true,
+          data: overallScore,
           message: "Exam submission is completed",
         })
       );
