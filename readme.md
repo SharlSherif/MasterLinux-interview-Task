@@ -5,7 +5,7 @@ A REST API built with Nodejs that serves an online MCQ exam with Reactjs for the
 Bearer / Token authentication.
 - Two types of users to login:
     - Examiners with the ability to add new questions to the quiz bank.
-- Normal users who can enroll in exams and answer the questions.
+    - Normal users who can enroll in exams and answer the questions.
 - Once you enroll in an exam, the questions begin to appear one by one in a random order.
 - Two degrees as a score for the correct answered question and zero for incorrect ones.
 - Any Exam is 10 questions
